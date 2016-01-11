@@ -14,8 +14,7 @@ public class FrameDialog extends javax.swing.JDialog {
     /**
      * Creates new form FrameDialog
      */
-    public FrameDialog(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public FrameDialog() {
         initComponents();
     }
 
