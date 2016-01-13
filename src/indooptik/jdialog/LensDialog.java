@@ -29,19 +29,19 @@ public class LensDialog extends javax.swing.JDialog implements DocumentListener{
     private DefaultTableModel dtm;
     private JTable table;
     private TableRowSorter cek;
-    LensDAO lensDAO;
+    private LensDAO lensDAO;
     /**
      * Creates new form lensDialog
      */
     public LensDialog() {
         initComponents();
         
-        this.lensDAO = DAOFactory.create().getLensDAO();
-        this.table = this.lensTabel;
+        lensDAO = DAOFactory.create().getLensDAO();
+        table = this.lensTabel;
         dtm = (DefaultTableModel) this.table.getModel();
-        this.searchTxt.getDocument().addDocumentListener(this);
+        searchTxt.getDocument().addDocumentListener(this);
         cek = new TableRowSorter(dtm);
-        this.table.setRowSorter(cek);
+        table.setRowSorter(cek);
         showData();
     }
 
@@ -207,8 +207,7 @@ public class LensDialog extends javax.swing.JDialog implements DocumentListener{
     }
     
     public void search() {
-        RowFilter rf = null;
-        rf = RowFilter.regexFilter(this.searchTxt.getText(), 1, 2, 3, 4, 5);
+        RowFilter rf = RowFilter.regexFilter(this.searchTxt.getText(), 1, 2, 3, 4, 5);
         cek.setRowFilter(rf);
     }
     

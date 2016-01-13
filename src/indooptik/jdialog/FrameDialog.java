@@ -5,11 +5,14 @@
  */
 package indooptik.jdialog;
 
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
 /**
  *
  * @author msacool
  */
-public class FrameDialog extends javax.swing.JDialog {
+public class FrameDialog extends javax.swing.JDialog implements DocumentListener{
 
     /**
      * Creates new form FrameDialog
@@ -149,4 +152,19 @@ public class FrameDialog extends javax.swing.JDialog {
     private javax.swing.JTextField jTextField1;
     private indooptik.utility.Panel panel1;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void insertUpdate(DocumentEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void removeUpdate(DocumentEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void changedUpdate(DocumentEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

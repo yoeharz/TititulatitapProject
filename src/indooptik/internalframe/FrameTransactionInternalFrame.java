@@ -8,6 +8,8 @@ package indooptik.internalframe;
 import indooptik.controller.DisplayTableController;
 import indooptik.controller.FrameTransactionController;
 import indooptik.controller.LensController;
+import indooptik.jdialog.FrameDialog;
+import indooptik.jdialog.LensDialog;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -736,7 +738,7 @@ public class FrameTransactionInternalFrame extends javax.swing.JInternalFrame im
     }//GEN-LAST:event_mobileTxtActionPerformed
 
     private void lensTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lensTxtActionPerformed
-        frameTransactionController.test();
+        frameTransactionController.show(this, new LensDialog());
     }//GEN-LAST:event_lensTxtActionPerformed
 
     private void colorTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorTxtActionPerformed
@@ -776,7 +778,7 @@ public class FrameTransactionInternalFrame extends javax.swing.JInternalFrame im
     }//GEN-LAST:event_pdTxtActionPerformed
 
     private void frameTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_frameTxtActionPerformed
-        // TODO add your handling code here:
+        frameTransactionController.show(this, new FrameDialog());
     }//GEN-LAST:event_frameTxtActionPerformed
 
     private void descTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_descTxtActionPerformed
