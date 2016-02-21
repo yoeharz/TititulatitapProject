@@ -10,7 +10,9 @@ import indooptik.jdialog.LensDialog;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 
 /**
  *
@@ -27,7 +29,7 @@ public class FrameTransactionController {
         System.out.print(frameTransactionInternalFrame.getLensTxt());
     }
     
-    public void show(Component parent, Component child){
+    public void show(JInternalFrame parent, JDialog child){
         child.setVisible(true);
         child.setLocation(parent.getWidth()/2,parent.getHeight()/2);
     }
