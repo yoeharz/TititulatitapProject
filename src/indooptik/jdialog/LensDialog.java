@@ -13,6 +13,7 @@ import indooptik.model.Lens;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Vector;
+import javax.swing.JInternalFrame;
 import javax.swing.JTable;
 import javax.swing.RowFilter;
 import javax.swing.event.DocumentEvent;
@@ -33,11 +34,12 @@ public class LensDialog extends javax.swing.JDialog implements DocumentListener{
     /**
      * Creates new form lensDialog
      */
-    public LensDialog() {
+    public LensDialog(JInternalFrame parent) {
         initComponents();
         
+        frameTransactionInternalFrame = (FrameTransactionInternalFrame) parent;
         lensDAO = DAOFactory.create().getLensDAO();
-        table = this.lensTabel;
+        table = this.lensTbl;
         dtm = (DefaultTableModel) this.table.getModel();
         searchTxt.getDocument().addDocumentListener(this);
         cek = new TableRowSorter(dtm);
@@ -59,7 +61,7 @@ public class LensDialog extends javax.swing.JDialog implements DocumentListener{
         jLabel1 = new javax.swing.JLabel();
         searchTxt = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        lensTabel = new javax.swing.JTable();
+        lensTbl = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -71,7 +73,7 @@ public class LensDialog extends javax.swing.JDialog implements DocumentListener{
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Cari");
 
-        lensTabel.setModel(new javax.swing.table.DefaultTableModel(
+        lensTbl.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -97,14 +99,14 @@ public class LensDialog extends javax.swing.JDialog implements DocumentListener{
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(lensTabel);
-        if (lensTabel.getColumnModel().getColumnCount() > 0) {
-            lensTabel.getColumnModel().getColumn(0).setMinWidth(0);
-            lensTabel.getColumnModel().getColumn(0).setMaxWidth(0);
-            lensTabel.getColumnModel().getColumn(3).setMinWidth(85);
-            lensTabel.getColumnModel().getColumn(3).setMaxWidth(85);
-            lensTabel.getColumnModel().getColumn(4).setMinWidth(110);
-            lensTabel.getColumnModel().getColumn(4).setMaxWidth(110);
+        jScrollPane1.setViewportView(lensTbl);
+        if (lensTbl.getColumnModel().getColumnCount() > 0) {
+            lensTbl.getColumnModel().getColumn(0).setMinWidth(0);
+            lensTbl.getColumnModel().getColumn(0).setMaxWidth(0);
+            lensTbl.getColumnModel().getColumn(3).setMinWidth(85);
+            lensTbl.getColumnModel().getColumn(3).setMaxWidth(85);
+            lensTbl.getColumnModel().getColumn(4).setMinWidth(110);
+            lensTbl.getColumnModel().getColumn(4).setMaxWidth(110);
         }
 
         jButton2.setText("Pilih");
@@ -179,20 +181,15 @@ public class LensDialog extends javax.swing.JDialog implements DocumentListener{
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable lensTabel;
+    private javax.swing.JTable lensTbl;
     private indooptik.utility.Panel panel1;
     private javax.swing.JTextField searchTxt;
     // End of variables declaration//GEN-END:variables
 
-    /**
-     * @param frameTransactionInternalFrame the frameTransactionInternalFrame to set
-     */
-    public void setFrameTransactionInternalFrame(FrameTransactionInternalFrame frameTransactionInternalFrame) {
-        this.frameTransactionInternalFrame = frameTransactionInternalFrame;
-    }
+    
 
     void showData(){
-         List<Lens> listLens = lensDAO.retreiveALL();
+        List<Lens> listLens = lensDAO.retreiveALL();
         dtm.setRowCount(0);
         for (Lens lens : listLens) {
             Vector v = new Vector();
@@ -222,17 +219,16 @@ public class LensDialog extends javax.swing.JDialog implements DocumentListener{
             lens.setSizeType(this.table.getValueAt(selectedRow, 3).toString());
             lens.setColor(this.table.getValueAt(selectedRow, 4).toString());
             lens.setPrice(new BigDecimal(this.table.getValueAt(selectedRow, 5).toString()));
-
-            frameTransactionInternalFrame.getLensTxt().setText(lens.getType()+"/"+lens.getLensVariance()
-            +"/"+lens.getSizeType());
-            frameTransactionInternalFrame.getColorTxt().setText(lens.getColor());
-            frameTransactionInternalFrame.getLensPriceTxt().setText("" + lens.getPrice());
+            
+            setData(lens);
         }
         return lens;
     }
     
-    public void setData(){
-        
+    public void setData(Lens lens){
+        frameTransactionInternalFrame.getLensTxt().setText(lens.getType()+"/"+lens.getLensVariance()+"/"+lens.getSizeType());
+        frameTransactionInternalFrame.getColorTxt().setText(lens.getColor());
+        frameTransactionInternalFrame.getLensPriceTxt().setText("" + lens.getPrice());
     }
 
     @Override

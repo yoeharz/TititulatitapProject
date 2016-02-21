@@ -5,8 +5,20 @@
  */
 package indooptik.jdialog;
 
+import indooptik.dao.DAOFactory;
+import indooptik.dao.FrameDAO;
+import indooptik.internalframe.FrameTransactionInternalFrame;
+import indooptik.model.Frame;
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Vector;
+import javax.swing.JInternalFrame;
+import javax.swing.JTable;
+import javax.swing.RowFilter;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -14,11 +26,27 @@ import javax.swing.event.DocumentListener;
  */
 public class FrameDialog extends javax.swing.JDialog implements DocumentListener{
 
+    private FrameTransactionInternalFrame frameTransactionInternalFrame;
+    private DefaultTableModel dtm;
+    private JTable table;
+    private TableRowSorter cek;
+    private FrameDAO frameDAO;
+    
     /**
      * Creates new form FrameDialog
      */
-    public FrameDialog() {
+    public FrameDialog(JInternalFrame parent) {
         initComponents();
+        
+        frameTransactionInternalFrame = (FrameTransactionInternalFrame) parent;
+        frameDAO = DAOFactory.create().getFrameDAO();
+        table = this.frameTbl;
+        dtm = (DefaultTableModel) this.table.getModel();
+        searchTxt.getDocument().addDocumentListener(this);
+        cek = new TableRowSorter(dtm);
+        table.setRowSorter(cek);
+        
+        showData();
     }
 
     /**
@@ -33,12 +61,13 @@ public class FrameDialog extends javax.swing.JDialog implements DocumentListener
         panel1 = new indooptik.utility.Panel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        searchTxt = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        frameTbl = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Pilih frame");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel1.setOpaque(false);
@@ -46,7 +75,7 @@ public class FrameDialog extends javax.swing.JDialog implements DocumentListener
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Cari");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        frameTbl.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null},
@@ -72,21 +101,26 @@ public class FrameDialog extends javax.swing.JDialog implements DocumentListener
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setMinWidth(0);
-            jTable1.getColumnModel().getColumn(0).setMaxWidth(0);
-            jTable1.getColumnModel().getColumn(1).setMinWidth(100);
-            jTable1.getColumnModel().getColumn(1).setMaxWidth(100);
-            jTable1.getColumnModel().getColumn(2).setMinWidth(75);
-            jTable1.getColumnModel().getColumn(2).setMaxWidth(75);
-            jTable1.getColumnModel().getColumn(4).setMinWidth(110);
-            jTable1.getColumnModel().getColumn(4).setMaxWidth(110);
-            jTable1.getColumnModel().getColumn(5).setMinWidth(100);
-            jTable1.getColumnModel().getColumn(5).setMaxWidth(100);
+        jScrollPane1.setViewportView(frameTbl);
+        if (frameTbl.getColumnModel().getColumnCount() > 0) {
+            frameTbl.getColumnModel().getColumn(0).setMinWidth(0);
+            frameTbl.getColumnModel().getColumn(0).setMaxWidth(0);
+            frameTbl.getColumnModel().getColumn(1).setMinWidth(100);
+            frameTbl.getColumnModel().getColumn(1).setMaxWidth(100);
+            frameTbl.getColumnModel().getColumn(2).setMinWidth(75);
+            frameTbl.getColumnModel().getColumn(2).setMaxWidth(75);
+            frameTbl.getColumnModel().getColumn(4).setMinWidth(110);
+            frameTbl.getColumnModel().getColumn(4).setMaxWidth(110);
+            frameTbl.getColumnModel().getColumn(5).setMinWidth(100);
+            frameTbl.getColumnModel().getColumn(5).setMaxWidth(100);
         }
 
         jButton1.setText("Pilih");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -95,15 +129,13 @@ public class FrameDialog extends javax.swing.JDialog implements DocumentListener
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(searchTxt))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 516, Short.MAX_VALUE)
                         .addComponent(jButton1)))
                 .addContainerGap())
         );
@@ -113,7 +145,7 @@ public class FrameDialog extends javax.swing.JDialog implements DocumentListener
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(searchTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -143,28 +175,81 @@ public class FrameDialog extends javax.swing.JDialog implements DocumentListener
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        chooseData();
+        dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable frameTbl;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
     private indooptik.utility.Panel panel1;
+    private javax.swing.JTextField searchTxt;
     // End of variables declaration//GEN-END:variables
 
+    void showData(){
+        List<Frame> frameList = frameDAO.retreiveALL();
+        dtm.setRowCount(0);
+        for (Frame frame : frameList) {
+            Vector v = new Vector();
+            v.add(frame.getIdFrame());
+            v.add(frame.getIdDisplayTable());
+            v.add(frame.getSeqNumber());
+            v.add(frame.getMerk());
+            v.add(frame.getFrameType());
+            v.add(frame.getColor());
+            v.add(frame.getPrice());
+            v.add(frame.getSoldStatus());
+            dtm.addRow(v);
+        }
+    }
+    
+    public void search() {
+        RowFilter rf = RowFilter.regexFilter(this.searchTxt.getText(), 1, 2, 3, 4, 5);
+        cek.setRowFilter(rf);
+    }
+    
+    public Frame chooseData(){
+        int selectedRow = this.table.getSelectedRow();
+        Frame frame = null;
+        if (selectedRow > -1) {
+            frame = new Frame();
+            
+            frame.setIdFrame(this.table.getValueAt(selectedRow, 0).hashCode());
+            frame.setIdDisplayTable(Integer.parseInt(this.table.getValueAt(selectedRow, 1).toString()));
+            frame.setSeqNumber(Integer.parseInt(this.table.getValueAt(selectedRow, 2).toString()));
+            frame.setMerk(this.table.getValueAt(selectedRow, 3).toString());
+            frame.setFrameType(this.table.getValueAt(selectedRow, 4).toString());
+            frame.setColor(this.table.getValueAt(selectedRow, 5).toString());
+            frame.setPrice(new BigDecimal(this.table.getValueAt(selectedRow, 6).toString()));
+            frame.setSoldStatus(this.table.getValueAt(selectedRow, 7).toString());
+            
+            setData(frame);
+        }
+        return frame;
+    }
+    
+    public void setData(Frame frame){
+        frameTransactionInternalFrame.getFrameTxt().setText(frame.getSeqNumber()+"/"+frame.getMerk()
+        +"/"+frame.getFrameType()+"/"+frame.getColor());
+        frameTransactionInternalFrame.getFramePriceTxt().setText(""+frame.getPrice());
+    }
+    
     @Override
     public void insertUpdate(DocumentEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        search();
     }
 
     @Override
     public void removeUpdate(DocumentEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        search();
     }
 
     @Override
     public void changedUpdate(DocumentEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        search();
     }
 }
