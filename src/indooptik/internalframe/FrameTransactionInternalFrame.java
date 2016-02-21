@@ -269,6 +269,11 @@ public class FrameTransactionInternalFrame extends javax.swing.JInternalFrame im
         jLabel8.setPreferredSize(new java.awt.Dimension(75, 15));
 
         lensTxt.setToolTipText("");
+        lensTxt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                lensTxtMousePressed(evt);
+            }
+        });
         lensTxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 lensTxtActionPerformed(evt);
@@ -476,6 +481,11 @@ public class FrameTransactionInternalFrame extends javax.swing.JInternalFrame im
         jPanel5.setOpaque(false);
 
         frameTxt.setToolTipText("");
+        frameTxt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                frameTxtMousePressed(evt);
+            }
+        });
         frameTxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 frameTxtActionPerformed(evt);
@@ -750,7 +760,7 @@ public class FrameTransactionInternalFrame extends javax.swing.JInternalFrame im
                 .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
@@ -758,7 +768,7 @@ public class FrameTransactionInternalFrame extends javax.swing.JInternalFrame im
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(76, 76, 76)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -802,7 +812,7 @@ public class FrameTransactionInternalFrame extends javax.swing.JInternalFrame im
     }//GEN-LAST:event_mobileTxtActionPerformed
 
     private void lensTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lensTxtActionPerformed
-        frameTransactionController.show(this, new LensDialog(this));
+        
     }//GEN-LAST:event_lensTxtActionPerformed
 
     private void colorTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorTxtActionPerformed
@@ -842,8 +852,16 @@ public class FrameTransactionInternalFrame extends javax.swing.JInternalFrame im
     }//GEN-LAST:event_pdTxtActionPerformed
 
     private void frameTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_frameTxtActionPerformed
-        frameTransactionController.show(this, new FrameDialog(this));
+        
     }//GEN-LAST:event_frameTxtActionPerformed
+
+    private void lensTxtMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lensTxtMousePressed
+        frameTransactionController.show(this, new LensDialog(this));
+    }//GEN-LAST:event_lensTxtMousePressed
+
+    private void frameTxtMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_frameTxtMousePressed
+        frameTransactionController.show(this, new FrameDialog(this));
+    }//GEN-LAST:event_frameTxtMousePressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
