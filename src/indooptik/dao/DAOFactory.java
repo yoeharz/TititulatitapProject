@@ -64,6 +64,8 @@ public class DAOFactory {
     private LensDAO lensDAO;
     private FrameDAO frameDAO;
     private CustomerDAO customerDAO;
+    private PaymentProviderDAO paymentProviderDAO;
+    private PaymentMethodDAO paymentMethodDAO;
         
     /**
      * @return the userInfoDAO
@@ -103,6 +105,22 @@ public class DAOFactory {
     public CustomerDAO getCustomerDAO() {
         if(customerDAO == null) customerDAO = new CustomerDAO(connection);
         return customerDAO;
+    }
+
+    /**
+     * @return the paymentProviderDAO
+     */
+    public PaymentProviderDAO getPaymentProviderDAO() {
+        if(paymentProviderDAO == null) paymentProviderDAO = new PaymentProviderDAO(connection);
+        return paymentProviderDAO;
+    }
+
+    /**
+     * @return the paymentMethodDAO
+     */
+    public PaymentMethodDAO getPaymentMethodDAO() {
+        if(paymentMethodDAO == null) paymentMethodDAO = new PaymentMethodDAO(connection);
+        return paymentMethodDAO;
     }
             
 }

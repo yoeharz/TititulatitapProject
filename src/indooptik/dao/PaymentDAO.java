@@ -28,7 +28,9 @@ public class PaymentDAO {
     }
 
     public List<Payment> retreiveALL() {
-        String sql = "SELECT id_payment, id_transaction, lens_price, frame_price, amount, dp, agency, variance FROM payment ";
+        String sql = "SELECT id_payment, id_transaction, lens_price, frame_price, amount, "
+                + "dp, agency, variance, discount, batch_no, id_payment_method, id_payment_provider, batch_no"
+                + " FROM payment ";
         PreparedStatement statement = null;
         List<Payment> listpaPayments = new ArrayList<>();
         try {
@@ -44,6 +46,9 @@ public class PaymentDAO {
                 payment.setDp(rs.getBigDecimal(6));
                 payment.setAgency(rs.getBigDecimal(7));
                 payment.setVariance(rs.getBigDecimal(8));                
+                payment.setDiscount(rs.getBigDecimal(9));
+                payment.setIdPaymentMethod(rs.getInt(10));
+                payment.setIdPaymentProvider(rs.getInt(11));
                 listpaPayments.add(payment);
             }
             rs.close();
@@ -67,7 +72,8 @@ public class PaymentDAO {
                 + payment.getIdPayment()+ ", " + payment.getIdTransaction() + ", "
                 + payment.getLensPrice()+", "+payment.getFramePrice()
                 +", "+payment.getAmount()+", "+payment.getDp()
-                +", "+payment.getAgency()+", "+payment.getVariance()+")";
+                +", "+payment.getAgency()+", "+payment.getVariance()+", "+payment.getDiscount()
+                +", "+payment.getBatchNo()+", "+payment.getIdPaymentMethod()+", "+payment.getIdPaymentProvider()+")";
         try {
            statement = (PreparedStatement) connection.prepareStatement(sql);
            statement.executeUpdate();
@@ -92,7 +98,9 @@ public class PaymentDAO {
                 +payment.getLensPrice()+", frame_price = "+payment.getFramePrice()
                 +", amount = "+payment.getAmount()
                 +", dp = "+payment.getDp()+", agency = "+payment.getAgency()
-                +", variance= "+payment.getVariance()+" WHERE id_payment = "+payment.getIdPayment();
+                +", variance= "+payment.getVariance()+", discount="+payment.getDiscount()
+                +", id_payment_method= "+payment.getIdPaymentMethod()+", id_payment_provider= "+payment.getIdPaymentProvider()
+                +", batch_no= "+payment.getBatchNo()+" WHERE id_payment = "+payment.getIdPayment();
         try {
            statement = (PreparedStatement) connection.prepareStatement(sql);
            statement.executeUpdate();

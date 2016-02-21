@@ -20,6 +20,10 @@ public class Payment {
     private BigDecimal dp = new BigDecimal(0.0);
     private BigDecimal agency = new BigDecimal(0.0);
     private BigDecimal variance = new BigDecimal(0.0);
+    private BigDecimal discount = new BigDecimal(0.0);
+    private String batchNo;
+    private int idPaymentMethod;
+    private int idPaymentProvider;
 
     /**
      * @return the idPayment
@@ -132,5 +136,62 @@ public class Payment {
     public void setVariance(BigDecimal variance) {
         this.variance = variance;
     }
+
+    /**
+     * @return the discount
+     */
+    public BigDecimal getDiscount() {
+        return discount;
+    }
+
+    /**
+     * @param discount the discount to set
+     */
+    public void setDiscount(BigDecimal discount) {
+        this.discount = discount;
+    }
+
+    /**
+     * @return the batchNo
+     */
+    public String getBatchNo() {
+        return batchNo;
+    }
+
+    /**
+     * @param batchNo the batchNo to set
+     */
+    public void setBatchNo(String batchNo) {
+        this.batchNo = batchNo;
+    }
+
+    /**
+     * @return the idPaymentMethod
+     */
+    public int getIdPaymentMethod() {
+        return idPaymentMethod;
+    }
+
+    /**
+     * @param idPaymentMethod the idPaymentMethod to set
+     */
+    public void setIdPaymentMethod(int idPaymentMethod) {
+        this.idPaymentMethod = idPaymentMethod;
+    }
+
+    /**
+     * @return the idPaymentProvider
+     */
+    public int getIdPaymentProvider() {
+        return idPaymentProvider;
+    }
+
+    /**
+     * @param idPaymentProvider the idPaymentProvider to set
+     */
+    public void setIdPaymentProvider(int idPaymentProvider) {
+        this.idPaymentProvider = idPaymentProvider;
+    }
+
     
 }
