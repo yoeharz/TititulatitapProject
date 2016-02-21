@@ -37,7 +37,7 @@ public class TransactionDAO {
             rs = statement.executeQuery();
             while (rs.next()) {
                 Transaction transaction = new Transaction();
-                transaction.setIdTransaction(rs.getInt(1));
+                transaction.setIdTransaction(rs.getString(1));
                 transaction.setIdCostumer(rs.getInt(2));
                 transaction.setIdLens(rs.getInt(3));
                 transaction.setIdFrame(rs.getInt(4));
