@@ -31,7 +31,7 @@ public class MainFrame extends javax.swing.JFrame {
     DisplayTableInternalFrame displayTableInternalFrame = new DisplayTableInternalFrame();
     LensInternalFrame lensInternalFrame = new LensInternalFrame();
     FrameInternalFrame frameInternalFrame = new FrameInternalFrame();
-    FrameTransactionInternalFrame frameTransactionInternalFrame = new FrameTransactionInternalFrame();
+    private FrameTransactionInternalFrame frameTransactionInternalFrame = new FrameTransactionInternalFrame();
     CustomerInternalFrame customerInternalFrame = new CustomerInternalFrame();
     /**
      * Creates new form MainFrame
@@ -177,22 +177,22 @@ public class MainFrame extends javax.swing.JFrame {
     private void lensAndFrameMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lensAndFrameMenuItemActionPerformed
         if (evt.getSource() == lensAndFrameMenuItem) {
             if (!frameTransactionInternalFrame.isVisible()) {
-                jDesktopPane1.add(frameTransactionInternalFrame);
-                frameTransactionInternalFrame.setVisible(true);
-                frameTransactionInternalFrame.setLocation(10, 10);
-                FrameTransactionController frameTransactionController = new FrameTransactionController(frameTransactionInternalFrame);
-                frameTransactionInternalFrame.setFrameTransactionController(frameTransactionController);
+                getjDesktopPane1().add(getFrameTransactionInternalFrame());
+                getFrameTransactionInternalFrame().setVisible(true);
+                getFrameTransactionInternalFrame().setLocation(10, 10);
+                FrameTransactionController frameTransactionController = new FrameTransactionController(getFrameTransactionInternalFrame());
+                getFrameTransactionInternalFrame().setFrameTransactionController(frameTransactionController);
 
             }
-            frameTransactionInternalFrame.moveToFront();
+            getFrameTransactionInternalFrame().moveToFront();
             try {
-                frameTransactionInternalFrame.setSelected(true);
+                getFrameTransactionInternalFrame().setSelected(true);
             } catch (PropertyVetoException ex) {
                 Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             try {
-                frameTransactionInternalFrame.setSelected(true);
+                getFrameTransactionInternalFrame().setSelected(true);
             } catch (PropertyVetoException ex) {
                 Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -207,7 +207,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         if (evt.getSource() == userInfoMenuItem) {
             if (!userInfoInternalFrame.isVisible()) {
-                jDesktopPane1.add(userInfoInternalFrame);
+                getjDesktopPane1().add(userInfoInternalFrame);
                 userInfoInternalFrame.setVisible(true);
                 userInfoInternalFrame.setLocation(10, 10);
                 UserInfoController userInfoController = new UserInfoController(userInfoInternalFrame);
@@ -232,7 +232,7 @@ public class MainFrame extends javax.swing.JFrame {
     private void displayTableMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayTableMenuItemActionPerformed
         if (evt.getSource() == displayTableMenuItem) {
             if (!displayTableInternalFrame.isVisible()) {
-                jDesktopPane1.add(displayTableInternalFrame);
+                getjDesktopPane1().add(displayTableInternalFrame);
                 displayTableInternalFrame.setVisible(true);
                 displayTableInternalFrame.setLocation(10, 10);
                 DisplayTableController displayTableController = new DisplayTableController(displayTableInternalFrame);
@@ -256,7 +256,7 @@ public class MainFrame extends javax.swing.JFrame {
     private void lensMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lensMenuItemActionPerformed
         if (evt.getSource() == lensMenuItem) {
             if (!lensInternalFrame.isVisible()) {
-                jDesktopPane1.add(lensInternalFrame);
+                getjDesktopPane1().add(lensInternalFrame);
                 lensInternalFrame.setVisible(true);
                 lensInternalFrame.setLocation(10, 10);
                 LensController lensController = new LensController(lensInternalFrame);
@@ -280,7 +280,7 @@ public class MainFrame extends javax.swing.JFrame {
     private void stockFrameMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stockFrameMenuItemActionPerformed
         if (evt.getSource() == stockFrameMenuItem) {
             if (!frameInternalFrame.isVisible()) {
-                jDesktopPane1.add(frameInternalFrame);
+                getjDesktopPane1().add(frameInternalFrame);
                 frameInternalFrame.setVisible(true);
                 frameInternalFrame.setLocation(10, 10);
                 FrameController frameController = new FrameController(frameInternalFrame);
@@ -304,10 +304,10 @@ public class MainFrame extends javax.swing.JFrame {
     private void customerItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerItemActionPerformed
         if (evt.getSource() == customerItem) {
             if (!customerInternalFrame.isVisible()) {
-                jDesktopPane1.add(customerInternalFrame);
+                getjDesktopPane1().add(customerInternalFrame);
                 customerInternalFrame.setVisible(true);
                 customerInternalFrame.setLocation(10, 10);
-                CustomerController customerController = new CustomerController(customerInternalFrame);
+                CustomerController customerController = new CustomerController(customerInternalFrame,this);
                 customerInternalFrame.setCustomerController(customerController);
             }
             customerInternalFrame.moveToFront();
@@ -345,4 +345,19 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem stockProdukMenuItem;
     private javax.swing.JMenuItem userInfoMenuItem;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * @return the frameTransactionInternalFrame
+     */
+    public FrameTransactionInternalFrame getFrameTransactionInternalFrame() {
+        return frameTransactionInternalFrame;
+    }
+
+    /**
+     * @return the jDesktopPane1
+     */
+    public javax.swing.JDesktopPane getjDesktopPane1() {
+        return jDesktopPane1;
+    }
+
 }

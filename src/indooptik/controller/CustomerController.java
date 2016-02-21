@@ -8,6 +8,9 @@ package indooptik.controller;
 import indooptik.dao.CustomerDAO;
 import indooptik.dao.DAOFactory;
 import indooptik.internalframe.CustomerInternalFrame;
+import indooptik.internalframe.LabelEditor;
+import indooptik.internalframe.LabelRender;
+import indooptik.main.MainFrame;
 import indooptik.model.Customer;
 import java.text.DateFormat;
 import java.text.Format;
@@ -18,6 +21,7 @@ import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.RowFilter;
@@ -36,8 +40,9 @@ public class CustomerController {
     private JTable table;
     private TableRowSorter cek;
     DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+    MainFrame frame;
 
-    public CustomerController(CustomerInternalFrame customerInternalFrame) {
+    public CustomerController(CustomerInternalFrame customerInternalFrame, MainFrame frame) {
         this.customerInternalFrame = customerInternalFrame;
         this.customerDAO = DAOFactory.create().getCustomerDAO();
         this.table = customerInternalFrame.getCustomerTabel();
@@ -45,7 +50,8 @@ public class CustomerController {
         customerInternalFrame.getSearchTxt().getDocument().addDocumentListener(customerInternalFrame);
         cek = new TableRowSorter(dtm);
         customerInternalFrame.getCustomerTabel().setRowSorter(cek);
-        showData();
+        this.frame = frame;
+        showData();        
     }
 
     public void showData() {
@@ -60,9 +66,15 @@ public class CustomerController {
             v.add(customer.getTelp());
             v.add(customer.getHp());
             v.add(dateFormat.format(customer.getHut()));
+            v.add("Ke Transaksi");
+            v.add("Ke Histori");
             no++;
             dtm.addRow(v);
         }
+        //customerInternalFrame.getCustomerTabel().getColumnModel().getColumn(5).setCellRenderer(null);
+        customerInternalFrame.getCustomerTabel().getColumnModel().getColumn(6).setCellRenderer(new LabelRender(this.frame));
+        customerInternalFrame.getCustomerTabel().getColumnModel().getColumn(7).setCellRenderer(new LabelRender(this.frame));
+        //customerInternalFrame.getCustomerTabel().getColumnModel().getColumn(6).setCellEditor(new LabelEditor());
     }
 
     public void search() {
