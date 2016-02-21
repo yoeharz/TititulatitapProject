@@ -12,7 +12,7 @@ import java.util.Date;
  * @author Yoeda H
  */
 public class Transaction {
-    private int idTransaction;
+    private String idTransaction;
     private int idCostumer;
     private int idLens;
     private int idFrame;
@@ -25,20 +25,6 @@ public class Transaction {
     private String lensColor;
     private String frame;
     private String desc;
-
-    /**
-     * @return the idTransaction
-     */
-    public int getIdTransaction() {
-        return idTransaction;
-    }
-
-    /**
-     * @param idTransaction the idTransaction to set
-     */
-    public void setIdTransaction(int idTransaction) {
-        this.idTransaction = idTransaction;
-    }
 
     /**
      * @return the idCostumer
@@ -206,6 +192,20 @@ public class Transaction {
      */
     public void setDesc(String desc) {
         this.desc = desc;
+    }
+
+    /**
+     * @return the idTransaction
+     */
+    public String getIdTransaction() {
+        return idTransaction;
+    }
+
+    /**
+     * @param idTransaction the idTransaction to set
+     */
+    public void setIdTransaction(String idTransaction) {
+        this.idTransaction = idTransaction;
     }
     
     
