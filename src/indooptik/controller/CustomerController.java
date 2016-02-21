@@ -54,8 +54,8 @@ public class CustomerController {
         int no = 1;
         for (Customer customer : listCustomer) {
             Vector v = new Vector();
-            v.add(customer.getIdCustomer());
             v.add(no);
+            v.add(customer.getIdCustomer());            
             v.add(customer.getName());
             v.add(customer.getTelp());
             v.add(customer.getHp());
@@ -73,7 +73,12 @@ public class CustomerController {
 
     public void save() {
         if (customerInternalFrame.getNameTxt().getText().trim().length() > 0 && customerInternalFrame.getBdayDate().getDate() != null) {
-            Customer customer = new Customer();
+            Customer customer = new Customer();   
+            String initial = customerInternalFrame.getNameTxt().getText().substring(0, 1).toUpperCase();
+            int idSequence = customerDAO.cekID(initial);
+            idSequence +=1;
+            System.out.println(initial+idSequence);
+            customer.setIdCustomer(initial+idSequence);
             customer.setName(customerInternalFrame.getNameTxt().getText());
             customer.setTelp(customerInternalFrame.getTelpTxt().getText());
             customer.setHp(customerInternalFrame.getNoHPTxt().getText());
@@ -103,7 +108,7 @@ public class CustomerController {
         Customer customer = null;
         if (selectedRow > -1) {
             customer = new Customer();
-            customer.setIdCustomer(customerInternalFrame.getCustomerTabel().getValueAt(selectedRow, 0).hashCode());
+            customer.setIdCustomer(customerInternalFrame.getCustomerTabel().getValueAt(selectedRow, 1).toString());
             customer.setName(customerInternalFrame.getCustomerTabel().getValueAt(selectedRow, 2).toString());
             customer.setTelp(customerInternalFrame.getCustomerTabel().getValueAt(selectedRow, 3).toString());
             customer.setHp(customerInternalFrame.getCustomerTabel().getValueAt(selectedRow, 4).toString());
@@ -127,7 +132,7 @@ public class CustomerController {
         if (selectedRow > -1) {
             if (customerInternalFrame.getNameTxt().getText().trim().length() > 0 && customerInternalFrame.getBdayDate().getDate() != null) {
                 Customer customer = new Customer();
-                customer.setIdCustomer(customerInternalFrame.getCustomerTabel().getValueAt(selectedRow, 0).hashCode());
+                customer.setIdCustomer(customerInternalFrame.getCustomerTabel().getValueAt(selectedRow, 1).toString());
                 customer.setName(customerInternalFrame.getNameTxt().getText());
                 customer.setTelp(customerInternalFrame.getTelpTxt().getText());
                 customer.setHp(customerInternalFrame.getNoHPTxt().getText());
