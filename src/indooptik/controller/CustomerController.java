@@ -24,6 +24,7 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
@@ -34,10 +35,10 @@ import javax.swing.table.TableRowSorter;
  */
 public class CustomerController {
 
-    CustomerInternalFrame customerInternalFrame;
+    public CustomerInternalFrame customerInternalFrame;
     CustomerDAO customerDAO;
     private DefaultTableModel dtm;
-    private JTable table;
+    public JTable table;
     private TableRowSorter cek;
     DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
     MainFrame frame;
@@ -46,12 +47,15 @@ public class CustomerController {
         this.customerInternalFrame = customerInternalFrame;
         this.customerDAO = DAOFactory.create().getCustomerDAO();
         this.table = customerInternalFrame.getCustomerTabel();
+        //this.table.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        //this.table.setColumnSelectionAllowed(true);
+        //this.table.setRowSelectionAllowed(true);
         dtm = (DefaultTableModel) this.table.getModel();
         customerInternalFrame.getSearchTxt().getDocument().addDocumentListener(customerInternalFrame);
         cek = new TableRowSorter(dtm);
         customerInternalFrame.getCustomerTabel().setRowSorter(cek);
         this.frame = frame;
-        showData();        
+        showData();
     }
 
     public void showData() {
@@ -61,7 +65,7 @@ public class CustomerController {
         for (Customer customer : listCustomer) {
             Vector v = new Vector();
             v.add(no);
-            v.add(customer.getIdCustomer());            
+            v.add(customer.getIdCustomer());
             v.add(customer.getName());
             v.add(customer.getTelp());
             v.add(customer.getHp());
@@ -72,8 +76,8 @@ public class CustomerController {
             dtm.addRow(v);
         }
         //customerInternalFrame.getCustomerTabel().getColumnModel().getColumn(5).setCellRenderer(null);
-        customerInternalFrame.getCustomerTabel().getColumnModel().getColumn(6).setCellRenderer(new LabelRender(this.frame));
-        customerInternalFrame.getCustomerTabel().getColumnModel().getColumn(7).setCellRenderer(new LabelRender(this.frame));
+        customerInternalFrame.getCustomerTabel().getColumnModel().getColumn(6).setCellRenderer(new LabelRender(this.frame, this));
+        customerInternalFrame.getCustomerTabel().getColumnModel().getColumn(7).setCellRenderer(new LabelRender(this.frame, this));
         //customerInternalFrame.getCustomerTabel().getColumnModel().getColumn(6).setCellEditor(new LabelEditor());
     }
 
@@ -85,12 +89,12 @@ public class CustomerController {
 
     public void save() {
         if (customerInternalFrame.getNameTxt().getText().trim().length() > 0 && customerInternalFrame.getBdayDate().getDate() != null) {
-            Customer customer = new Customer();   
+            Customer customer = new Customer();
             String initial = customerInternalFrame.getNameTxt().getText().substring(0, 1).toUpperCase();
             int idSequence = customerDAO.cekID(initial);
-            idSequence +=1;
-            System.out.println(initial+idSequence);
-            customer.setIdCustomer(initial+idSequence);
+            idSequence += 1;
+            System.out.println(initial + idSequence);
+            customer.setIdCustomer(initial + idSequence);
             customer.setName(customerInternalFrame.getNameTxt().getText());
             customer.setTelp(customerInternalFrame.getTelpTxt().getText());
             customer.setHp(customerInternalFrame.getNoHPTxt().getText());
@@ -162,7 +166,7 @@ public class CustomerController {
             JOptionPane.showMessageDialog(customerInternalFrame, "Harap pilih data yang akan di ubah");
         }
     }
-    
+
     public void delete() {
         Customer customer = chooseData();
         if (customer == null) {
