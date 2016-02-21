@@ -135,7 +135,7 @@ public class FrameDialog extends javax.swing.JDialog implements DocumentListener
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(searchTxt))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 516, Short.MAX_VALUE)
+                        .addGap(0, 551, Short.MAX_VALUE)
                         .addComponent(jButton1)))
                 .addContainerGap())
         );
