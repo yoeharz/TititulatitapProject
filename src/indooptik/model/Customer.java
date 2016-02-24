@@ -12,23 +12,24 @@ import java.util.Date;
  * @author Yoeda H
  */
 public class Customer {
-    private int idCustomer;
+    private String idCustomer;
     private String name;
     private String telp;
     private String hp;
     private Date hut;
+    private Date createdDate;
 
     /**
      * @return the idCustomer
      */
-    public int getIdCustomer() {
+    public String getIdCustomer() {
         return idCustomer;
     }
 
     /**
      * @param idCustomer the idCustomer to set
      */
-    public void setIdCustomer(int idCustomer) {
+    public void setIdCustomer(String idCustomer) {
         this.idCustomer = idCustomer;
     }
 
@@ -87,5 +88,20 @@ public class Customer {
     public void setHut(Date hut) {
         this.hut = hut;
     }
+
+    /**
+     * @return the createdDate
+     */
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    /**
+     * @param createdDate the createdDate to set
+     */
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
         
 }

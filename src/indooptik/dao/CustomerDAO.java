@@ -30,7 +30,7 @@ public class CustomerDAO {
     }
     
     public List<Customer> retreiveALL() {
-        String sql = "SELECT id, name, telp, hp, birth_date FROM customer ORDER BY id ";
+        String sql = "SELECT id, name, telp, hp, birth_date,created_date FROM customer ORDER BY LENGTH(id),id ";
         PreparedStatement statement = null;
         List<Customer> listCustomer = new ArrayList<>();
         try {
@@ -38,7 +38,7 @@ public class CustomerDAO {
             rs = statement.executeQuery();
             while (rs.next()) {
                 Customer customer = new Customer();
-                customer.setIdCustomer(rs.getInt(1));
+                customer.setIdCustomer(rs.getString(1));
                 customer.setName(rs.getString(2));
                 customer.setTelp(rs.getString(3));
                 customer.setHp(rs.getString(4));
@@ -62,12 +62,11 @@ public class CustomerDAO {
     
     public boolean insert(Customer customer) {
         PreparedStatement statement = null;
-        String sql = "INSERT INTO customer (name, telp, hp, birth_date )VALUES ("
-                 + "'" + customer.getName() + "', '"
+        String sql = "INSERT INTO customer (id, name, telp, hp, birth_date,created_date )VALUES ('"
+                 +customer.getIdCustomer()+"', '" + customer.getName() + "', '"
                 +customer.getTelp()+"', '"+customer.getHp()
-                +"','"+new Date(customer.getHut().getTime())+"');";
-        try {
-            System.out.println(sql);
+                +"','"+new Date(customer.getHut().getTime())+"',now());";
+        try {            
            statement = (PreparedStatement) connection.prepareStatement(sql);
            statement.executeUpdate();
            return true;
@@ -89,7 +88,7 @@ public class CustomerDAO {
         PreparedStatement statement = null;        
         String sql= "UPDATE customer SET name = '"+customer.getName()+"', telp = '"
                 +customer.getTelp()+"', hp = '"+customer.getHp()
-                +"', birth_date = '"+new Date(customer.getHut().getTime())+"' WHERE id = "+customer.getIdCustomer();
+                +"', birth_date = '"+new Date(customer.getHut().getTime())+"' WHERE id = '"+customer.getIdCustomer()+"';";
         try {
            statement = (PreparedStatement) connection.prepareStatement(sql);
            statement.executeUpdate();           
@@ -110,7 +109,7 @@ public class CustomerDAO {
 
     public boolean delete(Customer customer){
         PreparedStatement statement = null;        
-        String sql= "DELETE FROM customer WHERE id = "+customer.getIdCustomer();
+        String sql= "DELETE FROM customer WHERE id = '"+customer.getIdCustomer()+"';";
         try {
            statement = (PreparedStatement) connection.prepareStatement(sql);
            statement.executeUpdate();
@@ -127,5 +126,36 @@ public class CustomerDAO {
                 }
             }
         }
-    }    
+    }
+    
+    public int cekID(String initial){
+        String sql ="SELECT id,created_date FROM Customer WHERE id LIKE '"+initial+"%' ORDER BY created_date DESC LIMIT 0,1";
+        System.out.print(sql);
+        PreparedStatement statement = null;
+        int id = 0;
+        try {
+            statement = (PreparedStatement) connection.prepareStatement(sql);
+            rs = statement.executeQuery();
+            while (rs.next()) {
+                Customer customer = new Customer();
+                customer.setIdCustomer(rs.getString(1));    
+                System.out.print("ieww"+customer.getIdCustomer());
+                id = new Integer(customer.getIdCustomer().substring(1, customer.getIdCustomer().length()));                
+            }            
+            rs.close();
+            System.out.print(id);
+            return id;
+        } catch (SQLException ex) {
+            System.out.println("SQL Execption :" + ex.getMessage());
+            return 0;
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException exception) {
+                    exception.printStackTrace();
+                }
+            }
+        }        
+    }
 }
