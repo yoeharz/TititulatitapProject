@@ -8,6 +8,8 @@ package indooptik.internalframe;
 import indooptik.controller.DisplayTableController;
 import indooptik.controller.FrameTransactionController;
 import indooptik.controller.LensController;
+import indooptik.dao.CustomerDAO;
+import indooptik.jdialog.CustomerDialog;
 import indooptik.jdialog.FrameDialog;
 import indooptik.jdialog.LensDialog;
 import javax.swing.event.DocumentEvent;
@@ -87,23 +89,23 @@ public class FrameTransactionInternalFrame extends javax.swing.JInternalFrame im
         jLabel18 = new javax.swing.JLabel();
         framePriceTxt = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
-        amountTxt = new javax.swing.JTextField();
+        discountTxt = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
-        dpTxt = new javax.swing.JTextField();
+        totalPayTxt = new javax.swing.JTextField();
         jLabel22 = new javax.swing.JLabel();
         instituteTxt = new javax.swing.JTextField();
         jLabel23 = new javax.swing.JLabel();
-        balanceTxt = new javax.swing.JTextField();
+        remainingTxt = new javax.swing.JTextField();
         jLabel31 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        typePaymentCmb = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        traceNoTxt = new javax.swing.JTextField();
         jLabel28 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        dpTxt = new javax.swing.JTextField();
         jPanel8 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        resetBtn = new javax.swing.JButton();
+        holdBtn = new javax.swing.JButton();
+        payBtn = new javax.swing.JButton();
 
         exitBtn.setMnemonic('k');
 
@@ -168,6 +170,11 @@ public class FrameTransactionInternalFrame extends javax.swing.JInternalFrame im
         jPanel3.setOpaque(false);
 
         nameTxt.setToolTipText("");
+        nameTxt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                nameTxtMouseClicked(evt);
+            }
+        });
         nameTxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nameTxtActionPerformed(evt);
@@ -222,7 +229,7 @@ public class FrameTransactionInternalFrame extends javax.swing.JInternalFrame im
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(bodTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(bodTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -601,7 +608,7 @@ public class FrameTransactionInternalFrame extends javax.swing.JInternalFrame im
         jLabel31.setForeground(new java.awt.Color(255, 255, 255));
         jLabel31.setText("Tipe Bayar");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        typePaymentCmb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -629,7 +636,7 @@ public class FrameTransactionInternalFrame extends javax.swing.JInternalFrame im
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(amountTxt))
+                        .addComponent(discountTxt))
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -639,10 +646,10 @@ public class FrameTransactionInternalFrame extends javax.swing.JInternalFrame im
                             .addComponent(jLabel28))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(dpTxt)
-                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField4)
-                            .addComponent(jTextField1)))
+                            .addComponent(totalPayTxt)
+                            .addComponent(typePaymentCmb, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(traceNoTxt)
+                            .addComponent(dpTxt)))
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -650,7 +657,7 @@ public class FrameTransactionInternalFrame extends javax.swing.JInternalFrame im
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(balanceTxt)))
+                        .addComponent(remainingTxt)))
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
@@ -667,23 +674,23 @@ public class FrameTransactionInternalFrame extends javax.swing.JInternalFrame im
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(amountTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(discountTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(dpTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(totalPayTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(9, 9, 9)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel31)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(typePaymentCmb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(traceNoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel28)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dpTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -691,18 +698,24 @@ public class FrameTransactionInternalFrame extends javax.swing.JInternalFrame im
                 .addGap(18, 18, 18)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(balanceTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(remainingTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel8.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel8.setOpaque(false);
 
-        jButton1.setText("Reset");
+        resetBtn.setText("Reset");
+        resetBtn.setName("resetBtn"); // NOI18N
+        resetBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resetBtnActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Tunda");
+        holdBtn.setText("Tunda");
 
-        jButton3.setText("Bayar");
+        payBtn.setText("Bayar");
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -710,11 +723,11 @@ public class FrameTransactionInternalFrame extends javax.swing.JInternalFrame im
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGap(98, 98, 98)
-                .addComponent(jButton1)
+                .addComponent(resetBtn)
                 .addGap(18, 18, 18)
-                .addComponent(jButton2)
+                .addComponent(holdBtn)
                 .addGap(18, 18, 18)
-                .addComponent(jButton3)
+                .addComponent(payBtn)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
@@ -722,9 +735,9 @@ public class FrameTransactionInternalFrame extends javax.swing.JInternalFrame im
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(resetBtn)
+                    .addComponent(holdBtn)
+                    .addComponent(payBtn))
                 .addContainerGap())
         );
 
@@ -776,7 +789,7 @@ public class FrameTransactionInternalFrame extends javax.swing.JInternalFrame im
     }// </editor-fold>//GEN-END:initComponents
 
     private void nameTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameTxtActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_nameTxtActionPerformed
 
     private void phoneTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_phoneTxtActionPerformed
@@ -839,23 +852,51 @@ public class FrameTransactionInternalFrame extends javax.swing.JInternalFrame im
         frameTransactionController.show(this, new FrameDialog(this));
     }//GEN-LAST:event_frameTxtMousePressed
 
+    private void nameTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nameTxtMouseClicked
+        frameTransactionController.show(this, new CustomerDialog(this));
+    }//GEN-LAST:event_nameTxtMouseClicked
+
+    private void resetBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetBtnActionPerformed
+        nameTxt.setText("");
+        phoneTxt.setText("");
+        mobileTxt.setText("");
+        bodTxt.setDate(null);
+        lensTxt.setText("");
+        colorTxt.setText("");
+        odSphTxt.setText("");
+        odCylTxt.setText("");
+        odAxisTxt.setText("");
+        osSphTxt.setText("");
+        osCylTxt.setText("");
+        osAxisTxt.setText("");
+        additionTxt.setText("");
+        pdTxt.setText("");
+        frameTxt.setText("");
+        descTxt.setText("");
+        lensPriceTxt.setText("");
+        framePriceTxt.setText("");
+        discountTxt.setText("");
+        totalPayTxt.setText("");
+        typePaymentCmb.setSelectedIndex(-1);
+        traceNoTxt.setText("");
+        dpTxt.setText("");
+        instituteTxt.setText("");
+        remainingTxt.setText("");
+    }//GEN-LAST:event_resetBtnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField additionTxt;
-    private javax.swing.JTextField amountTxt;
-    private javax.swing.JTextField balanceTxt;
     private com.toedter.calendar.JDateChooser bodTxt;
     private javax.swing.JTextField colorTxt;
     private javax.swing.JTextArea descTxt;
+    private javax.swing.JTextField discountTxt;
     private javax.swing.JTextField dpTxt;
     private javax.swing.JButton exitBtn;
     private javax.swing.JTextField framePriceTxt;
     private javax.swing.JTextField frameTxt;
+    private javax.swing.JButton holdBtn;
     private javax.swing.JTextField instituteTxt;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -894,8 +935,6 @@ public class FrameTransactionInternalFrame extends javax.swing.JInternalFrame im
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField lensPriceTxt;
     private javax.swing.JTextField lensTxt;
     private javax.swing.JTextField mobileTxt;
@@ -907,8 +946,14 @@ public class FrameTransactionInternalFrame extends javax.swing.JInternalFrame im
     private javax.swing.JTextField osCylTxt;
     private javax.swing.JTextField osSphTxt;
     private indooptik.utility.Panel panel1;
+    private javax.swing.JButton payBtn;
     private javax.swing.JTextField pdTxt;
     private javax.swing.JTextField phoneTxt;
+    private javax.swing.JTextField remainingTxt;
+    private javax.swing.JButton resetBtn;
+    private javax.swing.JTextField totalPayTxt;
+    private javax.swing.JTextField traceNoTxt;
+    private javax.swing.JComboBox<String> typePaymentCmb;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -944,14 +989,14 @@ public class FrameTransactionInternalFrame extends javax.swing.JInternalFrame im
      * @return the amountTxt
      */
     public javax.swing.JTextField getAmountTxt() {
-        return amountTxt;
+        return discountTxt;
     }
 
     /**
      * @return the balanceTxt
      */
     public javax.swing.JTextField getBalanceTxt() {
-        return balanceTxt;
+        return remainingTxt;
     }
 
     /**
@@ -972,7 +1017,7 @@ public class FrameTransactionInternalFrame extends javax.swing.JInternalFrame im
      * @return the dpTxt
      */
     public javax.swing.JTextField getDpTxt() {
-        return dpTxt;
+        return totalPayTxt;
     }
 
     /**
