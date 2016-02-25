@@ -10,12 +10,14 @@ import indooptik.controller.DisplayTableController;
 import indooptik.controller.FrameController;
 import indooptik.controller.FrameTransactionController;
 import indooptik.controller.LensController;
+import indooptik.controller.ProductController;
 import indooptik.controller.UserInfoController;
 import indooptik.internalframe.CustomerInternalFrame;
 import indooptik.internalframe.DisplayTableInternalFrame;
 import indooptik.internalframe.FrameInternalFrame;
 import indooptik.internalframe.FrameTransactionInternalFrame;
 import indooptik.internalframe.LensInternalFrame;
+import indooptik.internalframe.ProductInternalFrame;
 import indooptik.internalframe.UserInfoInternalFrame;
 import java.beans.PropertyVetoException;
 import java.util.logging.Level;
@@ -33,6 +35,7 @@ public class MainFrame extends javax.swing.JFrame {
     FrameInternalFrame frameInternalFrame = new FrameInternalFrame();
     private FrameTransactionInternalFrame frameTransactionInternalFrame = new FrameTransactionInternalFrame();
     CustomerInternalFrame customerInternalFrame = new CustomerInternalFrame();
+    ProductInternalFrame productInternalFrame = new ProductInternalFrame();
     /**
      * Creates new form MainFrame
      */
@@ -69,6 +72,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Indo Optik");
+        getContentPane().setLayout(new java.awt.BorderLayout());
 
         panel1.setLayout(new java.awt.BorderLayout());
 
@@ -129,6 +133,11 @@ public class MainFrame extends javax.swing.JFrame {
         stockMenu.add(stockFrameMenuItem);
 
         stockProdukMenuItem.setText("Produk");
+        stockProdukMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                stockProdukMenuItemActionPerformed(evt);
+            }
+        });
         stockMenu.add(stockProdukMenuItem);
 
         jMenuBar1.add(stockMenu);
@@ -324,6 +333,30 @@ public class MainFrame extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_customerItemActionPerformed
+
+    private void stockProdukMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stockProdukMenuItemActionPerformed
+        if (evt.getSource() == stockProdukMenuItem) {
+            if (!productInternalFrame.isVisible()) {
+                getjDesktopPane1().add(productInternalFrame);
+                productInternalFrame.setVisible(true);
+                productInternalFrame.setLocation(10, 10);
+                ProductController productController = new ProductController(productInternalFrame);
+                productInternalFrame.setProductController(productController);
+            }
+            productInternalFrame.moveToFront();
+            try {
+                productInternalFrame.setSelected(true);
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            try {
+                productInternalFrame.setSelected(true);
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_stockProdukMenuItemActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
